@@ -41,148 +41,80 @@ onMounted(() => {
 
 <template>
   <nav class="nav">
-    <div class="navbar-nav">
-      <li class="nav-logo">
+    <ul class="navbar-logo">
+      <li>
         <RouterLink to="/">
-          <img class="nav-logo" src="../assets/image/logo4.png" alt="" />
+          <img src="../assets/image/logo4.png" alt="" />
         </RouterLink>
       </li>
-      <RouterLink to="/home" class="nav-link">
-        <li class="nav-item"><strong>Send</strong>Everything</li>
-      </RouterLink>
-    </div>
+      <li>
+        <RouterLink to="/" class="nav-link nav-home">
+          <strong>Send</strong>Everything
+        </RouterLink>
+      </li>
+    </ul>
 
-    <div class="navbar-nav">
-      <div>
-        <div class="navbar-login" v-if="!currentUser">
-          <RouterLink :to="{ path: '/chatroom' }" class="nav-link" @click="alertLogin()">
-            <li class="nav-item">
-              <font-awesome-icon :icon="['far', 'comments']" /> 聊天室
-            </li>
-          </RouterLink>
-          <RouterLink :to="{ path: '/BulletinBoard', query: { page: 1 } }" class="nav-link">
-            <li class="nav-item">
-              <font-awesome-icon icon="circle-arrow-up" /> 佈告欄
-            </li>
-          </RouterLink>
-          <RouterLink :to="{ path: '/WorkBoard', query: { page: 1 } }" class="nav-link">
-            <li class="nav-item">
-              <font-awesome-icon icon="circle-arrow-up" /> 作業版
-            </li>
-          </RouterLink>
-          <RouterLink to="/uploadfile" class="nav-link" @click="setSelectedTab('Send')">
-            <li class="nav-item">
-              <font-awesome-icon icon="circle-arrow-up" /> Upload / Download <font-awesome-icon icon="circle-down" />
-            </li>
-          </RouterLink>
-          <RouterLink to="/signin" class="nav-link">
-            <li class="nav-item">
-              <font-awesome-icon icon="sign-in-alt" /> Sign in
-            </li>
-          </RouterLink>
-        </div>
-      </div>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <RouterLink
+          :to="{ path: '/chatroom' }"
+          class="nav-link"
+          @click="alertLogin()"
+         >
+           <font-awesome-icon :icon="['far', 'comments']" /> 聊天室
+         </RouterLink>
+      </li>
+      <li class="nav-item">
+        <RouterLink
+          :to="{ path: '/BulletinBoard', query: { page: 1 } }"
+          class="nav-link"
+         >
+           <font-awesome-icon icon="circle-arrow-up" /> 佈告欄
+        </RouterLink>
+          </li>
+      <li class="nav-item">
+        <RouterLink
+           :to="{ path: '/WorkBoard', query: { page: 1 } }"
+           class="nav-link"
+        >
+           <font-awesome-icon icon="circle-arrow-up" /> 作業版
+         </RouterLink>
+       </li>
+      <li class="nav-item">
+        <RouterLink
+           to="/uploadfile"
+           class="nav-link"
+          @click="setSelectedTab('Send')"
+        >
+          <font-awesome-icon icon="circle-arrow-up" /> Upload / Download
+           <font-awesome-icon icon="circle-down" />
+        </RouterLink>
+      </li>
 
-      <div v-if="currentUser">
-        <RouterLink :to="{ path: '/chatroom' }" class="nav-link">
-          <li class="nav-item">
-            <font-awesome-icon :icon="['far', 'comments']" /> 聊天室
-          </li>
-        </RouterLink>
-        <RouterLink :to="{ path: '/BulletinBoard', query: { page: 1 } }" class="nav-link">
-          <li class="nav-item">
-            <font-awesome-icon icon="circle-arrow-up" /> 佈告欄
-          </li>
-        </RouterLink>
-        <RouterLink :to="{ path: '/WorkBoard', query: { page: 1 } }" class="nav-link">
-          <li class="nav-item">
-            <font-awesome-icon icon="circle-arrow-up" /> 作業版
-          </li>
-        </RouterLink>
-        <RouterLink to="/uploadfile" class="nav-link" @click="setSelectedTab('Send')">
-          <li class="nav-item">
-            <font-awesome-icon icon="circle-arrow-up" /> Upload / Download <font-awesome-icon icon="circle-down" />
-          </li>
-        </RouterLink>
-        <li class="nav-user">
-          <img :src="`data:image/png;base64,${currentUser.profileImage}`" alt="">
-          {{ currentUser.username }}
-        </li>
-        <li class="nav-item" @click.prevent="logOut">
-          <a class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" /> Sign out
-          </a>
-        </li>
-      </div>
-    </div>
+      <li class="nav-item" v-if="!currentUser">
+        <RouterLink to="/signin" class="nav-link">
+           <font-awesome-icon icon="sign-in-alt" /> Sign in
+         </RouterLink>
+      </li>
+
+      <li class="nav-user" v-if="currentUser">
+        <img
+          :src="`data:image/png;base64,${currentUser.profileImage}`"
+          alt=""
+          />
+        {{ currentUser.username }}
+      </li>
+
+      <li class="nav-item" @click.prevent="logOut" v-if="currentUser">
+        <a class="nav-link">
+          <font-awesome-icon icon="sign-in-alt" /> Sign out
+        </a>
+      </li>
+    </ul>
   </nav>
 </template>
 
 <style scoped lang="scss">
 @import "../assets/styles/app";
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  background: $primary-theme-pink;
-  height: 70px;
-  border-bottom: 2px solid #E3CCCD;
-}
-
-.navbar-nav a,
-li {
-  display: inline-block;
-  margin-right: 5px;
-  list-style-type: none;
-  text-decoration: none;
-  font-size: 22px;
-  color: dimgrey;
-  cursor: pointer;
-}
-
-.nav-user {
-  position: relative;
-  margin-right: 15px;
-  margin-left: 3rem;
-  cursor: default;
-
-  img {
-    position: absolute;
-    top:-5px;
-    left: -2.6rem;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-  }
-}
-
-.navbar-login {
-  display: inline-block;
-}
-
-.nav-item {
-  padding: 10px;
-  transition: 0.3s;
-
-  &:hover {
-    background-color: rgba(114, 114, 118, 0.174);
-    border-radius: 10px;
-  }
-
-  strong {
-    font-weight: 650;
-  }
-}
-
-.nav-logo {
-  transform: translateY(11%);
-  margin-right: -3px;
-
-  img {
-    width: 35px;
-    height: 35px;
-  }
-}
+@import "../assets/styles/layout/navbar";
 </style>

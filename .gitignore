@@ -13,6 +13,7 @@ dist
 dist-ssr
 coverage
 *.local
+Dockerfile
 
 /cypress/videos/
 /cypress/screenshots/
