@@ -4,6 +4,7 @@ import UploadFilesService from "../../services/FilesService";
 import { v4 as uuidv4 } from "uuid";
 import QRCode from "qrcode";
 import DeleteBoard from "../upload/DeleteBoard.vue";
+import API_URL from "../../services/Unify_API/API_URL";
 
 const emits = defineEmits([
   "sendFileInfo",
